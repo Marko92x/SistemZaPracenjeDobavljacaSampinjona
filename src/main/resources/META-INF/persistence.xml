@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<persistence version="2.1" xmlns="http://xmlns.jcp.org/xml/ns/persistence" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://xmlns.jcp.org/xml/ns/persistence http://xmlns.jcp.org/xml/ns/persistence/persistence_2_1.xsd">
+  <persistence-unit name="rs.marko_SistemZaPracenjeDobavljacaSampinjona_war_1.0PU" transaction-type="RESOURCE_LOCAL">
+    <provider>org.eclipse.persistence.jpa.PersistenceProvider</provider>
+    <class>rs.marko.domain.Administrativniradnik</class>
+    <class>rs.marko.domain.Zaduzenje</class>
+    <class>rs.marko.domain.Dobavljac</class>
+    <class>rs.marko.domain.Mesto</class>
+    <class>rs.marko.domain.Dnevnaberba</class>
+    <class>rs.marko.domain.Stavkadnevneberbe</class>
+    <exclude-unlisted-classes>false</exclude-unlisted-classes>
+    <properties>
+      <property name="javax.persistence.jdbc.url" value="jdbc:mysql://localhost:3306/projekat_prosoft?zeroDateTimeBehavior=convertToNull"/>
+      <property name="javax.persistence.jdbc.user" value="mare"/>
+      <property name="javax.persistence.jdbc.driver" value="com.mysql.jdbc.Driver"/>
+      <property name="javax.persistence.jdbc.password" value="mare"/>
+    </properties>
+  </persistence-unit>
+</persistence>
