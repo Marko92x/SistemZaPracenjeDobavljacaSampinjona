@@ -1,0 +1,80 @@
+<html>
+    <head>
+        <title>PECURKE</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/login.css" rel="stylesheet">
+        <link href="css/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body>
+
+
+        <div class="row" id="row1">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Stavke Dnevne Berbe</h1>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row" id="row2">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" id="dnevneBerbe">
+                <table class="table" id="tblStavke"></table>
+                <div id="empty" style="float: center;"></div>
+                <button class="button btn-info" style="float: center;" id="btnDodajStavku">Dodaj stavke</button>
+
+            </div>
+            <div class="col-md-2"></div>
+
+
+        </div>
+
+        <div id="dialog-form" hidden="hidden" title="Dodavanje stavki">
+
+            <form>
+                <fieldset>
+
+                    <div class="col-md-6">
+                        <label >Tacne</label>
+                        <input type="text" name="name" id="tacne" class="text ui-widget-content ui-corner-all">
+                        <label >Prva klasa</label>
+                        <input type="text" name="name" id="prvaKlasa" class="text ui-widget-content ui-corner-all">
+                        <label >Druga klasa</label>
+                        <input type="text" name="name" id="drugaKlasa" class="text ui-widget-content ui-corner-all">
+                        <label >Treca klasa</label>
+                        <input type="text" name="name" id="trecaKlasa" class="text ui-widget-content ui-corner-all">
+
+
+                    </div>
+                    <div class="col-md-6">
+                        <label >Cena tacne</label>
+                        <input type="text" name="name" id="cenaTacne" class="text ui-widget-content ui-corner-all">
+                        <label >Cena prve klase</label>
+                        <input type="text" name="name" id="cenaPrveKlase" class="text ui-widget-content ui-corner-all">
+                        <label >Cena druge klase</label>
+                        <input type="text" name="name" id="cenaDrugeKlase" class="text ui-widget-content ui-corner-all">
+                        <label >Cena trece klase</label>
+                        <input type="text" name="name" id="cenaTreceKlase" class="text ui-widget-content ui-corner-all">
+
+
+                    </div>
+
+
+
+
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                </fieldset>
+                <br/>
+                <table class="table" id="tblDialogStavke"></table>
+            </form>
+        </div>
+
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/stavke.js"></script>
+        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+    </body>
+</html>

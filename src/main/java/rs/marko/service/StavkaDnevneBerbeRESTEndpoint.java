@@ -19,7 +19,6 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 import javax.ws.rs.core.Response;
 import rs.marko.domain.Dnevnaberba;
-import rs.marko.domain.DnevnaberbaPK;
 import rs.marko.domain.Stavkadnevneberbe;
 import rs.marko.domain.StavkadnevneberbePK;
 import rs.marko.exceptions.DataNotFoundException;
@@ -44,27 +43,27 @@ public class StavkaDnevneBerbeRESTEndpoint {
     }
 
     @POST
-    @Path("/{jmbg}")
-    @Produces(MediaType.APPLICATION_JSON)
+    @Path("/{dnevnaBerba}")
+//    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
-    public Response insertStavke(@HeaderParam("authorization") String authorization, @PathParam("jmbg") String jmbg, List<Stavkadnevneberbe> stavke) {
+    public Response insertStavke(@HeaderParam("authorization") String authorization, @PathParam("dnevnaBerba") int idDB, List<Stavkadnevneberbe> stavke) {
         EntityManager em = helper.getEntityManager();
-        Dnevnaberba db = new Dnevnaberba();
-        db.setDatum(new Date());
-        DnevnaberbaPK pk = new DnevnaberbaPK();
-        pk.setJmbg(jmbg);
-        db.setDnevnaberbaPK(pk);
+//        Dnevnaberba db = new Dnevnaberba();
+//        db.setDatum(new Date());
+//        DnevnaberbaPK pk = new DnevnaberbaPK();
+//        pk.setJmbg(jmbg);
+//        db.setDnevnaberbaPK(pk);
         if (helper.isLogged(authorization, em)) {
             if (stavke != null && !stavke.isEmpty()) {
-                helper.persistObject(em, db);
-                String query = "SELECT db FROM Dnevnaberba db ORDER BY db.dnevnaberbaPK.dnevnaberbaid DESC";
-                Dnevnaberba dbPk = (Dnevnaberba) em.createQuery(query).setMaxResults(1).getSingleResult();
+//                helper.persistObject(em, db);
+//                String query = "SELECT db FROM Dnevnaberba db ORDER BY db.dnevnaberbaPK.dnevnaberbaid DESC";
+                Dnevnaberba dbPk = em.createNamedQuery("Dnevnaberba.findByDnevnaberbaid", Dnevnaberba.class).setParameter("dnevnaberbaid", idDB).getSingleResult();
                 try {
                     for (Stavkadnevneberbe s : stavke) {
                         s.setDnevnaberba(dbPk);
                         StavkadnevneberbePK sdPk = new StavkadnevneberbePK(dbPk.getDnevnaberbaPK().getJmbg(), dbPk.getDnevnaberbaPK().getDnevnaberbaid(), 0);
                         s.setStavkadnevneberbePK(sdPk);
-//                        validator.isValid(s);
+                        validator.isValid(s);
                         em.persist(s);
                     }
                     em.getTransaction().begin();

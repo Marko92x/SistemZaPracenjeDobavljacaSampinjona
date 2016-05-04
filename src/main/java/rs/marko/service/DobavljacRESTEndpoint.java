@@ -81,7 +81,6 @@ public class DobavljacRESTEndpoint {
     //ispraviti JMBG regex, nije dobar!!!
     @POST
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response insertDobavljac(@HeaderParam("authorization") String authorization, Dobavljac dobavljac) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {
@@ -99,14 +98,13 @@ public class DobavljacRESTEndpoint {
 
     @PUT
     @Consumes(MediaType.APPLICATION_JSON)
-    @Produces(MediaType.APPLICATION_JSON)
     public Response updateDobavljac(@HeaderParam("authorization") String authorization, Dobavljac dobavljac) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {
             try {
                 Dobavljac oldDobavljac = em.find(Dobavljac.class, dobavljac.getJmbg());
                 if (oldDobavljac != null) {
-                    dobavljac.setMesto(em.find(Mesto.class, dobavljac.getMesto()));
+                    dobavljac.setMesto(em.find(Mesto.class, dobavljac.getMesto().getPtt()));
                     Dobavljac d = (Dobavljac) helper.mergeValues(oldDobavljac, dobavljac);
 //                    validator.isValid(d);
                     helper.mergeObject(em, dobavljac);
@@ -125,7 +123,7 @@ public class DobavljacRESTEndpoint {
     
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteDobavljac(@HeaderParam("authorization") String authorization, @PathParam("id") String id){
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)){

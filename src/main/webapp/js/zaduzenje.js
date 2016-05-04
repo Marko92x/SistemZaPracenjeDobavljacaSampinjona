@@ -44,7 +44,7 @@ function napuniTabelu(zaduzenja) {
         var table_body = document.createElement('TBODY');
         table.appendChild(table_body);
         var tHead = document.createElement('THEAD');
-        var arrayHeader = ["Ime i prezime", "Datum zaduzenja", "Datum razduzenja"];
+        var arrayHeader = ["Vrsta zaduzenja", "Datum zaduzenja", "Datum razduzenja"];
 
         for (var i = 0; i < arrayHeader.length; i++) {
             tHead.appendChild(document.createElement("TH")).appendChild(document.createTextNode(arrayHeader[i]));
@@ -60,7 +60,12 @@ function napuniTabelu(zaduzenja) {
                 switch (j) {
                     case 0:
                         td.id = "td_id_" + zaduzenja[x].id;
-                        td.appendChild(document.createTextNode(zaduzenja[x].dobavljac.ime + " " + zaduzenja[x].dobavljac.prezime));
+                        if (zaduzenja[x].kompost === true) {
+                            td.appendChild(document.createTextNode("Kompost"));
+                        }
+                        if (zaduzenja[x].prevoz === true) {
+                            td.appendChild(document.createTextNode("Prevoz"));
+                        }
                         break;
                     case 1:
                         var d = new Date(zaduzenja[x].datumzaduzenja);

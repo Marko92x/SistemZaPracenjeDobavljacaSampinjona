@@ -59,12 +59,12 @@ public class DnevnaBerbaRESTEndpoint {
     }
 
     @POST
-    @Produces(MediaType.APPLICATION_JSON)
+//    @Produces(MediaType.APPLICATION_JSON)
     @Consumes(MediaType.APPLICATION_JSON)
     public Response insertDnevnaBerba(@HeaderParam("authorization") String authorization, Dnevnaberba dnevnaBerba) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {
-//            validator.isValid(dnevnaBerba);
+            validator.isValid(dnevnaBerba);
             try {
                 helper.persistObject(em, dnevnaBerba);
             } catch (RollbackException e) {

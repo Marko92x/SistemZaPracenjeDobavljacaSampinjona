@@ -54,6 +54,27 @@ th {
     font-weight: bold;
 }
 
+#tblStavke{
+    /*font-size: 150%;*/
+    font-weight: bold;
+    text-align: center;
+}
+
+#tblDialogStavke{
+    font-weight: bold;
+    text-align: center;
+}
+
+#tblDialogStavke th{
+    text-align: center;
+    color: black;
+}
+
+#tblDialogStavke td{
+    text-align: center;
+    color: black;
+}
+
 #row1{
     max-height: 200px;
 }
@@ -386,7 +407,20 @@ small.text-muted {
     font-size: 1.1em;
 }
 
+/*#zaduzenjaSkrol {
+    height: 500px !important;
+    overflow-y: scroll;
+}
+
 #dobavljaci {  
     height: 500px !important;
     overflow-y: scroll;
-}​
+}​*/
+
+#ko1 {
+    padding-top: 3em;
+}
+
+#ko2 {
+    padding-top: 3em;
+}

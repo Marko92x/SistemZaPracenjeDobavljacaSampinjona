@@ -42,20 +42,90 @@ and open the template in the editor.
                 </ul>-->
 
         <div class="row" id="row1">
-            <div class="col-md-2"></div>
-            <div class="col-md-8"></div>
-            <div class="col-md-2"></div>
+            <div class="col-md-5"></div>
+            <div class="col-md-2">
+                <h1>Dobavljači</h1>
+                <br/>
+                <button class="button btn-info" style="float: center;" id="btnDodajDobavljaca">Dodaj novog dobavljača</button>
+            </div>
+            <div class="col-md-5">
+                <div id="ko1" class="col-md-5">
+                    <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
+                    <button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button>
+                </div>
+                <div id="ko2" class="col-md-5">
+                    <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
+                    <button class="button btn-info" id="idKreirajStatistiku">Kreiraj statistiku</button>
+                </div>
+                <div class="col-md-2"></div>
+<!--                <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
+                <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
+                <br/><br/><div id="btn1"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>
+                <div id="btn2"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>-->
+            </div>
         </div>
         <div class="row" id="row2">
             <div class="col-md-2"></div>
-            <div class="col-md-8" id="dobavljaci"><table class="table" id="tblDobavljaci"></table></div>
+            <div class="col-md-8" id="dobavljaci">
+                <table class="table" id="tblDobavljaci"></table>
+            </div>
+
             <div class="col-md-2"></div>
 
 
         </div>
 
         <div id="dialog-confirm" title="Izaberite?">
-           
+
+        </div>
+
+        <div id="dialog-form" hidden="hidden" title="Dodavanje stavki">
+
+            <form>
+                <fieldset>
+
+                    <div class="col-md-12">
+                        <label >JMBG</label><br/>
+                        <input type="text" name="name" id="jmbg" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Ime</label><br/>
+                        <input type="text" name="name" id="ime" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Prezime</label><br/>
+                        <input type="text" name="name" id="prezime" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Broj lične karte</label><br/>
+                        <input type="text" name="name" id="licnaKarta" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Tekući račun</label><br/>
+                        <input type="text" name="name" id="tekuciRacun" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Broj Gazdinstva</label><br/>
+                        <input type="text" name="name" id="brojGazdinstva" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Mesto</label><br/>
+                        <select class="selectpicker" id="selectMesto"></select><br/>
+                        <label >Ulica</label><br/>
+                        <input type="text" name="name" id="ulica" class="text ui-widget-content ui-corner-all"><br/>
+                        <label >Broj</label><br/>
+                        <input type="text" name="name" id="broj" class="text ui-widget-content ui-corner-all">
+
+
+                    </div>
+                    <!--                    <div class="col-md-6">
+                                            <label >Cena tacne</label>
+                                            <input type="text" name="name" id="cenaTacne" class="text ui-widget-content ui-corner-all">
+                                            <label >Cena prve klase</label>
+                                            <input type="text" name="name" id="cenaPrveKlase" class="text ui-widget-content ui-corner-all">
+                                            <label >Cena druge klase</label>
+                                            <input type="text" name="name" id="cenaDrugeKlase" class="text ui-widget-content ui-corner-all">
+                                            <label >Cena trece klase</label>
+                                            <input type="text" name="name" id="cenaTreceKlase" class="text ui-widget-content ui-corner-all">
+                    
+                    
+                                        </div>-->
+
+
+
+
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                </fieldset>
+            </form>
         </div>
 
 

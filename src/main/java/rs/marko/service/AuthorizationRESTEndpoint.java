@@ -5,6 +5,8 @@
  */
 package rs.marko.service;
 
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import javax.persistence.EntityManager;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -53,6 +55,7 @@ public class AuthorizationRESTEndpoint {
             JsonToken jsonToken = new JsonToken(tokenHelper.encode(ar.getToken()));
             return Response.ok().entity(jsonToken).build();
         } catch (RuntimeException e){
+            Logger.getLogger(AuthorizationRESTEndpoint.class.getName()).log(Level.SEVERE, null, e);
             throw new BasicAuthenticationException(e.getMessage());
         }
     }

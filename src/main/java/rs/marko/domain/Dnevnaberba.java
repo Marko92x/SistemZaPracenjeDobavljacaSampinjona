@@ -12,6 +12,8 @@ import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
 import javax.persistence.Entity;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.NamedQueries;
 import javax.persistence.NamedQuery;
 import javax.persistence.OneToMany;
@@ -43,6 +45,17 @@ public class Dnevnaberba implements Serializable, Validation {
     private Date datum;
     @OneToMany(cascade = CascadeType.ALL, mappedBy = "dnevnaberba")
     private List<Stavkadnevneberbe> stavkadnevneberbeList;
+    @JoinColumn(name = "jmbg", referencedColumnName = "jmbg", insertable = false, updatable = false)
+    @ManyToOne(optional = false)
+    private Dobavljac dobavljac;
+
+    public Dobavljac getDobavljac() {
+        return dobavljac;
+    }
+
+    public void setDobavljac(Dobavljac dobavljac) {
+        this.dobavljac = dobavljac;
+    }
 
     public Dnevnaberba() {
     }
