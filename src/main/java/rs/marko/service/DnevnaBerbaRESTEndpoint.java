@@ -78,7 +78,6 @@ public class DnevnaBerbaRESTEndpoint {
 
     @DELETE
     @Path("/{id}")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response deleteDnevnaBerba(@HeaderParam("authorization") String authorization, @PathParam("id") int id) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {

@@ -11,6 +11,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.NoResultException;
 import javax.persistence.RollbackException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -91,7 +92,6 @@ public class ZaduzenjaRESTEndpoint {
     }
 
     @PUT
-    @Produces(MediaType.APPLICATION_JSON)
     @Path("/{id}")
     public Response updateZaduzenje(@HeaderParam("authorization") String authorization, @PathParam("id") int zaduzenjeID) {
         EntityManager em = helper.getEntityManager();
@@ -108,6 +108,24 @@ public class ZaduzenjaRESTEndpoint {
                 throw new DataNotFoundException("Ovo zaduzenje ne postoji u bazi!");
             }
 
+        } else {
+            throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
+        }
+    }
+
+    @DELETE
+    @Path("/{id}")
+//    @Produces(MediaType.APPLICATION_JSON)
+    public Response deleteZaduzenje(@HeaderParam("authorization") String authorization, @PathParam("id") int id) {
+        EntityManager em = helper.getEntityManager();
+        if (helper.isLogged(authorization, em)) {
+            try {
+                Zaduzenje zaduzenje = em.createNamedQuery("Zaduzenje.findByZaduzenjeid", Zaduzenje.class).setParameter("zaduzenjeid", id).getSingleResult();
+                helper.removeObject(em, zaduzenje);
+                return Response.ok().entity("Uspesno obrisano zaduzenje!").build();
+            } catch (NoResultException e) {
+                throw new DataNotFoundException("Ovo zaduzenje ne postoji u bazi!");
+            }
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }

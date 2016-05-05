@@ -120,7 +120,7 @@ function napuniTabelu(dobavljaci) {
                         break;
                     case 4:
                         var b = document.createElement('BUTTON');
-                        b.className = "button btn-info";
+                        b.className = "btn btn-info";
                         b.appendChild(document.createTextNode("Radi"));
                         b.id = "XXX" + dobavljaci[x].jmbg;
                         b.onclick = function () {
@@ -130,7 +130,7 @@ function napuniTabelu(dobavljaci) {
                         break;
                     case 5:
                         var b = document.createElement('BUTTON');
-                        b.className = "button btn-danger";
+                        b.className = "btn btn-danger";
                         b.appendChild(document.createTextNode("Obriši"));
                         b.id = "DDD" + dobavljaci[x].jmbg;
                         td.appendChild(b);
@@ -410,9 +410,13 @@ $("#idKreirajObracun").click(function () {
     var godinaDo = datumDo.getFullYear();
     var datumDoString = godinaDo + '-' + mesecDo + '-' + danDo;
 
-    window.open("http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString);
+//    window.open("http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString);
 
-//    window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString;
+    if (datumOd <= datumDo) {
+        window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString;
+    } else {
+        alert("Datum OD je vice od datuma DO!")
+    }
 //    $.ajax({
 //        type: "GET",
 //        url: getCookie("basicURL") + "rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString,
@@ -428,7 +432,7 @@ $("#idKreirajObracun").click(function () {
 //        }
 //    });
 //    $.ajax({
-//        type: "POST",
+//        type: "GET",
 //        url: getCookie("basicURL") + "rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString,
 //        success: function (response, status, xhr) { // check for a filename
 //            var filename = "";
@@ -487,5 +491,10 @@ $("#idKreirajStatistiku").click(function () {
     var godinaDo = datumDo.getFullYear();
     var datumDoString = godinaDo + '-' + mesecDo + '-' + danDo;
 
-    window.open("http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/statistika/" + datumOdString + "/" + datumDoString);
+    if (datumOd <= datumDo) {
+        window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/statistika/" + datumOdString + "/" + datumDoString;
+    } else {
+        alert("Datum OD je vice od datuma DO!")
+    }
+    //    window.open("http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/statistika/" + datumOdString + "/" + datumDoString);
 });

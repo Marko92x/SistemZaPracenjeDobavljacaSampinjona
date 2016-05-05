@@ -8,6 +8,7 @@
 $(document).ready(function () {
 //    alert(getCookie("dnevnaberba"));
     ucitajStavke();
+    dugmici("DDD");
 });
 
 var table = document.getElementById('tblStavke');
@@ -50,7 +51,7 @@ function popuniTabelu(stavke) {
     var table_body = document.createElement('TBODY');
     table.appendChild(table_body);
     var tHead = document.createElement('THEAD');
-    var arrayHeader = ["Tacne", "CenaTacni", "PrvaKlasa", "CenaPrveKlase", "DrugaKlasa", "CenaDrugeKlase", "TrecaKlasa", "CenaTreceKlase"];
+    var arrayHeader = ["Tacne", "CenaTacni", "PrvaKlasa", "CenaPrveKlase", "DrugaKlasa", "CenaDrugeKlase", "TrecaKlasa", "CenaTreceKlase", ""];
 
     for (var i = 0; i < arrayHeader.length; i++) {
         tHead.appendChild(document.createElement("TH")).appendChild(document.createTextNode(arrayHeader[i]));
@@ -60,7 +61,7 @@ function popuniTabelu(stavke) {
         var tr = document.createElement('TR');
         table_body.appendChild(tr);
 
-        for (var j = 0; j < 8; j++) {
+        for (var j = 0; j < 9; j++) {
             var td = document.createElement('TD');
             switch (j) {
                 case 0:
@@ -87,6 +88,13 @@ function popuniTabelu(stavke) {
                     break;
                 case 7:
                     td.appendChild(document.createTextNode(stavke[x].cenatrecaklasa));
+                    break;
+                case 8:
+                    var b = document.createElement('BUTTON');
+                    b.className = "button btn-danger";
+                    b.appendChild(document.createTextNode("Obriši"));
+                    b.id = "DDD" + stavke[x].stavkadnevneberbePK.stavkaid;
+                    td.appendChild(b);
                     break;
                 default:
             }
@@ -118,7 +126,7 @@ var dialogTableBody = popuniDialogTabelu();
 
 
 function popuniDialogTabelu() {
-
+    dialogTable.innerHTML = "";
     var table_body = document.createElement('TBODY');
     dialogTable.appendChild(table_body);
     var tHead = document.createElement('THEAD');
@@ -299,12 +307,13 @@ $(function () {
                 refresh();
                 listaStavki = [];
                 dialog.dialog("close");
-                var new_tbody = document.createElement('tbody');
-//                populate_with_new_rows(new_tbody);
-                dialogTableBody.parentNode.replaceChild(new_tbody, dialogTableBody);
+//                var new_tbody = document.createElement('tbody');
+//                new_tbody = popuniDialogTabelu();
+//                dialogTableBody.parentNode.replaceChild(new_tbody, dialogTableBody);
+                dialogTableBody = popuniDialogTabelu();
             },
             error: function (response) {
-                    refresh();
+                refresh();
                 alert(JSON.parse(response.responseText).errorMessage);
             }
         });
@@ -365,3 +374,30 @@ function refresh() {
     window.clearInterval(id);
 }
 
+function dugmici(delimiter) {
+    $(function () {
+        $(document).on('click', '[id^=' + delimiter + "]", function () {
+            var id = jQuery(this).attr("id");
+            var niz = id.split(delimiter);
+            var id1 = niz[1];
+            var r = confirm("Da li ste sigurni?");
+            if (r === true) {
+                $.ajax({
+                    type: "DELETE",
+                    url: getCookie("basicURL") + "rest/stavka/" + id1,
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': getCookie('token')
+                    },
+                    success: function (response) {
+
+                        refresh();
+                    },
+                    error: function (response) {
+                        alert(JSON.parse(response.responseText).errorMessage);
+                    }
+                });
+            }
+        });
+    });
+}

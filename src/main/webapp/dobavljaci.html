@@ -42,32 +42,35 @@ and open the template in the editor.
                 </ul>-->
 
         <div class="row" id="row1">
-            <div class="col-md-5"></div>
+            <div class="col-md-5">
+                <button class="btn btn-info" id="btnDodajDobavljaca">Odjavi se<span class="glyphicon glyphicon-search"></span></button>
+                
+            </div>
             <div class="col-md-2">
                 <h1>Dobavljači</h1>
                 <br/>
-                <button class="button btn-info" style="float: center;" id="btnDodajDobavljaca">Dodaj novog dobavljača</button>
+                <button class="btn btn-info" style="float: center;" id="btnDodajDobavljaca">Dodaj novog dobavljača</button>
             </div>
             <div class="col-md-5">
                 <div id="ko1" class="col-md-5">
                     <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
-                    <button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button>
+                    <button class="btn btn-info" id="idKreirajObracun">Kreiraj obračun</button>
                 </div>
                 <div id="ko2" class="col-md-5">
                     <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
-                    <button class="button btn-info" id="idKreirajStatistiku">Kreiraj statistiku</button>
+                    <button class="btn btn-info" id="idKreirajStatistiku">Kreiraj statistiku</button>
                 </div>
                 <div class="col-md-2"></div>
-<!--                <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
-                <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
-                <br/><br/><div id="btn1"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>
-                <div id="btn2"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>-->
+                <!--                <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
+                                <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
+                                <br/><br/><div id="btn1"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>
+                                <div id="btn2"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>-->
             </div>
         </div>
         <div class="row" id="row2">
             <div class="col-md-2"></div>
             <div class="col-md-8" id="dobavljaci">
-                <table class="table" id="tblDobavljaci"></table>
+                <table class="table" cellspacing="0" width="100%" id="tblDobavljaci"></table>
             </div>
 
             <div class="col-md-2"></div>

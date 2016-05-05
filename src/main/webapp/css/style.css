@@ -12,6 +12,8 @@ html, body {
     -moz-background-size: cover;
     background-size: cover;
     -o-background-size: cover;
+
+    height:600px;
 }
 
 .nav {
@@ -50,6 +52,11 @@ th {
 }
 
 #tblZaduzenja{
+    font-size: 150%;
+    font-weight: bold;
+}
+
+#tblDnevneBerbe{
     font-size: 150%;
     font-weight: bold;
 }
@@ -407,20 +414,45 @@ small.text-muted {
     font-size: 1.1em;
 }
 
-/*#zaduzenjaSkrol {
+#zaduzenjaSkrol {
     height: 500px !important;
-    overflow-y: scroll;
+    overflow: auto;
+}
+
+#dnevneBerbe {
+    height: 500px !important;
+    overflow: auto;
+}
+
+#staavke {
+    height: 500px !important;
+    overflow: auto;
 }
 
 #dobavljaci {  
-    height: 500px !important;
-    overflow-y: scroll;
-}​*/
+    /*    height: 500px !important;
+        overflow: auto;*/
+    overflow: auto;
+    height: 100%;
+}​
 
 #ko1 {
+    padding-top: 3em;
+}
+
+#para1 {
     padding-top: 3em;
 }
 
 #ko2 {
     padding-top: 3em;
 }
+
+.btn-xlarge {
+    padding: 18px 28px;
+    font-size: 22px;
+    line-height: normal;
+    -webkit-border-radius: 8px;
+       -moz-border-radius: 8px;
+            border-radius: 8px;
+    }

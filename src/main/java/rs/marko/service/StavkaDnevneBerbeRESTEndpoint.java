@@ -8,8 +8,10 @@ package rs.marko.service;
 import java.util.Date;
 import java.util.List;
 import javax.persistence.EntityManager;
+import javax.persistence.NoResultException;
 import javax.persistence.PersistenceException;
 import javax.ws.rs.Consumes;
+import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.HeaderParam;
 import javax.ws.rs.POST;
@@ -92,6 +94,23 @@ public class StavkaDnevneBerbeRESTEndpoint {
                 throw new DataNotFoundException("Nema stavki za ovu dnevnu berbu!");
             }
             return Response.ok().entity(stavke).build();
+        } else {
+            throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
+        }
+    }
+    
+    @DELETE
+    @Path("/{id}")
+    public Response deleteStavka(@HeaderParam("authorization") String authorization, @PathParam("id") int id) {
+        EntityManager em = helper.getEntityManager();
+        if (helper.isLogged(authorization, em)) {
+            try {
+                Stavkadnevneberbe stavka = (Stavkadnevneberbe) em.createNamedQuery("Stavkadnevneberbe.findByStavkaid").setParameter("stavkaid", id).getSingleResult();
+                helper.removeObject(em, stavka);
+                return Response.ok().build();
+            } catch (NoResultException e) {
+                throw new DataNotFoundException("Ova stavka ne postoji u bazi!");
+            }
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }

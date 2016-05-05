@@ -1,6 +1,7 @@
 $(document).ready(function () {
     ucitajDnevneBerbe();
-    dugmici();
+    dugmici("XXX");
+    dugmici("DDD");
 });
 
 function getCookie(cname) {
@@ -76,7 +77,7 @@ function napuniTabelu(dnevneberbe) {
             var da = d.getUTCDate() + 1;
             var m = d.getUTCMonth() + 1;
             var datum = da + "." + m + "." + y + ".";
-            for (var j = 0; j < 3; j++) {
+            for (var j = 0; j < 4; j++) {
                 var td = document.createElement('TD');
                 switch (j) {
                     case 0:
@@ -92,7 +93,14 @@ function napuniTabelu(dnevneberbe) {
                         b.className = "button btn-info";
                         b.appendChild(document.createTextNode("Radi"));
                         b.id = "XXX" + dnevneberbe[x].dnevnaberbaPK.dnevnaberbaid + "XXX" + datum;
-                                td.appendChild(b);
+                        td.appendChild(b);
+                        break;
+                    case 3:
+                        var b = document.createElement('BUTTON');
+                        b.className = "button btn-danger";
+                        b.appendChild(document.createTextNode("Obriši"));
+                        b.id = "DDD" + dnevneberbe[x].dnevnaberbaPK.dnevnaberbaid;
+                        td.appendChild(b);
                         break;
                     default:
                 }
@@ -314,16 +322,36 @@ function todayDate() {
     return today;
 }
 
-function dugmici() {
+function dugmici(delimiter) {
     $(function () {
-        $(document).on('click', '[id^=XXX]', function () {
+        $(document).on('click', '[id^=' + delimiter + ']', function () {
             var id = jQuery(this).attr("id");
-            var niz = id.split("XXX");
+            var niz = id.split(delimiter);
             var id1 = niz[1];
-            var datum = niz[2];
-            document.cookie = "dnevnaberba=" + id1;
-            document.cookie = "datumDB=" + datum;
-            window.location.href = "stavke-dnevne-berbe.html";
+            if (delimiter === "XXX") {
+                var datum = niz[2];
+                document.cookie = "dnevnaberba=" + id1;
+                document.cookie = "datumDB=" + datum;
+                window.location.href = "stavke-dnevne-berbe.html";
+            } else {
+                var r = confirm("Da li ste sigurni?");
+                if (r === true) {
+                    $.ajax({
+                        type: "DELETE",
+                        url: getCookie("basicURL") + "rest/dnevnaBerba/" + id1,
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'Authorization': getCookie('token')
+                        },
+                        success: function (response) {
+                            refresh();
+                        },
+                        error: function (response) {
+                            alert(JSON.parse(response.responseText).errorMessage);
+                        }
+                    });
+                }
+            }
 
         });
     });
