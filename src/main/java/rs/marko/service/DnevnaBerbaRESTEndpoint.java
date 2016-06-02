@@ -84,7 +84,7 @@ public class DnevnaBerbaRESTEndpoint {
             try {
                 Dnevnaberba dnevnaBerba = (Dnevnaberba) em.createNamedQuery("Dnevnaberba.findByDnevnaberbaid").setParameter("dnevnaberbaid", id).getSingleResult();
                 helper.removeObject(em, dnevnaBerba);
-                return Response.ok().build();
+                return Response.ok().entity("Uspesno obrisana dnevna berba!").build();
             } catch (NoResultException e) {
                 throw new DataNotFoundException("Ovaj dobavljac ne postoji u bazi!");
             }

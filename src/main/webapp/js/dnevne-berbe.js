@@ -347,6 +347,7 @@ function dugmici(delimiter) {
                             refresh();
                         },
                         error: function (response) {
+                            refresh();
                             alert(JSON.parse(response.responseText).errorMessage);
                         }
                     });
