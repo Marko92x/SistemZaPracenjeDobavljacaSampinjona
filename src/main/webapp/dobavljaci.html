@@ -9,10 +9,10 @@ and open the template in the editor.
         <title>TODO supply a title</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
-        <link href="css/bootstrap.css" rel="stylesheet">
+        <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
         <link href="css/style.css" rel="stylesheet">
         <link href="css/login.css" rel="stylesheet">
-        <link href="css/jquery-ui.min.css" rel="stylesheet">
+        <link href="jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet">
     </head>
     <body>
 
@@ -42,8 +42,8 @@ and open the template in the editor.
                 </ul>-->
 
         <div class="row" id="row1">
-            <div class="col-md-5">
-                <button class="btn btn-info" id="btnDodajDobavljaca"><span class="glyphicon glyphicon glyphicon-log-out"></span>Odjavi se</button>
+            <div id="outButton" class="col-md-5">
+                <button id="logOut" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-log-out"></span> Odjavi se</button>
                 
             </div>
             <div class="col-md-2">
@@ -89,23 +89,23 @@ and open the template in the editor.
 
                     <div class="col-md-12">
                         <label >JMBG</label><br/>
-                        <input type="text" name="name" id="jmbg" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="jmbg" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Ime</label><br/>
-                        <input type="text" name="name" id="ime" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="ime" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Prezime</label><br/>
-                        <input type="text" name="name" id="prezime" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="prezime" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Broj lične karte</label><br/>
-                        <input type="text" name="name" id="licnaKarta" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="licnaKarta" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Tekući račun</label><br/>
-                        <input type="text" name="name" id="tekuciRacun" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="tekuciRacun" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Broj Gazdinstva</label><br/>
-                        <input type="text" name="name" id="brojGazdinstva" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="brojGazdinstva" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Mesto</label><br/>
                         <select class="selectpicker" id="selectMesto"></select><br/>
                         <label >Ulica</label><br/>
-                        <input type="text" name="name" id="ulica" class="text ui-widget-content ui-corner-all"><br/>
+                        <input type="text" name="name" id="ulica" class="text-center ui-widget-content ui-corner-all"><br/>
                         <label >Broj</label><br/>
-                        <input type="text" name="name" id="broj" class="text ui-widget-content ui-corner-all">
+                        <input type="text" name="name" id="broj" class="text-center ui-widget-content ui-corner-all">
 
 
                     </div>
@@ -130,11 +130,31 @@ and open the template in the editor.
                 </fieldset>
             </form>
         </div>
+        
+        <div class="modal fade" id="messageModal" role="dialog" tabindex="-1">
+            <form>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title">Poruka</h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p id='message'></p>
+                        </div>
+                        <div class="modal-footer modal-footer-text-center">
+                            <button id="bla" type="submit" class="btn btn-info center-block"
+                                    data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
 
 
         <script type="text/javascript" src="js/jquery.js"></script>
-        <script type="text/javascript" src="js/bootstrap.js"></script>
+        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="js/dobavljaci.js"></script>
-        <script type="text/javascript" src="js/jquery-ui.min.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
     </body>
 </html>

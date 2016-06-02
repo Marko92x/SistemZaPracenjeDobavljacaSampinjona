@@ -84,13 +84,15 @@ public class DobavljacRESTEndpoint {
     public Response insertDobavljac(@HeaderParam("authorization") String authorization, Dobavljac dobavljac) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {
-//            validator.isValid(dobavljac);
+            validator.isValid(dobavljac);
             try {
+                Mesto mesto = em.find(Mesto.class, dobavljac.getMesto().getPtt());
+                dobavljac.setMesto(mesto);
                 helper.persistObject(em, dobavljac);
             } catch (RollbackException e) {
-                throw new MyRollbackException("Ovaj dobavljac vec postoji u bazi!");
+                throw new MyRollbackException("Sistem ne moze da zapamti novog dobavljača!");
             }
-            return Response.status(Response.Status.CREATED).build();
+            return Response.status(Response.Status.CREATED).entity("Sistem je zapamtio dobavljača!").build();
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }

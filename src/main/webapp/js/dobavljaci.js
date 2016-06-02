@@ -318,12 +318,16 @@ $(function () {
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
-                    alert("Uspesno ste kreirali dobavljač!");
+                    var p = document.getElementById('message');
+                    p.innerHTML = response;
+                    $('#messageModal').modal('show');
                     refresh();
                     dialog.dialog("close");
                 },
                 error: function (response) {
-                    alert(JSON.parse(response.responseText).errorMessage);
+                    var p = document.getElementById('message');
+                    p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                    $('#messageModal').modal('show');
                 }
             });
         } else {

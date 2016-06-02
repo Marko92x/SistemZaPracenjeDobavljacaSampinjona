@@ -102,13 +102,13 @@ function napuniTabelu(zaduzenja) {
                     case 5:
                         if (zaduzenja[x].datumrazduzenja === null) {
                             var b = document.createElement('BUTTON');
-                            b.className = "button btn-info";
+                            b.className = "btn btn-info";
                             b.appendChild(document.createTextNode("Razduži"));
                             b.id = "XXX" + zaduzenja[x].zaduzenjePK.zaduzenjeid;
                             td.appendChild(b);
                         } else {
                             var b = document.createElement('BUTTON');
-                            b.className = "button btn-info";
+                            b.className = "btn btn-info";
                             b.appendChild(document.createTextNode("Razduži"));
                             b.disabled = true;
                             td.appendChild(b);
@@ -116,7 +116,7 @@ function napuniTabelu(zaduzenja) {
                         break;
                     case 6:
                         var b = document.createElement('BUTTON');
-                        b.className = "button btn-danger";
+                        b.className = "btn btn-danger";
                         b.appendChild(document.createTextNode("Obriši"));
                         b.id = "DDD" + zaduzenja[x].zaduzenjePK.zaduzenjeid;
                         td.appendChild(b);
