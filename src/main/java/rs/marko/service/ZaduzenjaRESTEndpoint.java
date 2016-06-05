@@ -79,13 +79,13 @@ public class ZaduzenjaRESTEndpoint {
             pk.setJmbg(dobavljac.getJmbg());
             zaduzenje.setZaduzenjePK(pk);
             zaduzenje.setDatumzaduzenja(new Date());
-//            validator.isValid(zaduzenje);
+            validator.isValid(zaduzenje);
             try {
                 helper.persistObject(em, zaduzenje);
             } catch (RollbackException e) {
-                throw new MyRollbackException("Ovaj zaduzenje vec postoji u bazi!");
+                throw new MyRollbackException("Sistem ne moše da zapamti novo zaduženje!");
             }
-            return Response.status(Response.Status.CREATED).build();
+            return Response.status(Response.Status.CREATED).entity("Sistem je zapamtio zaduženje!").build();
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }
@@ -103,9 +103,9 @@ public class ZaduzenjaRESTEndpoint {
                 zaduzenje.setRazduzio(ar);
                 zaduzenje.setDatumrazduzenja(new Date());
                 helper.mergeObject(em, zaduzenje);
-                return Response.ok().build();
+                return Response.ok().entity("Sistem je promenio zaduženje!").build();
             } catch (NoResultException e) {
-                throw new DataNotFoundException("Ovo zaduzenje ne postoji u bazi!");
+                throw new DataNotFoundException("Sistem ne može da promeni zaduženje!");
             }
 
         } else {

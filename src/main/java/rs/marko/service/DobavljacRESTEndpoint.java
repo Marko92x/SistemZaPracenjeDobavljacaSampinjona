@@ -103,38 +103,34 @@ public class DobavljacRESTEndpoint {
     public Response updateDobavljac(@HeaderParam("authorization") String authorization, Dobavljac dobavljac) {
         EntityManager em = helper.getEntityManager();
         if (helper.isLogged(authorization, em)) {
-            try {
-                Dobavljac oldDobavljac = em.find(Dobavljac.class, dobavljac.getJmbg());
-                if (oldDobavljac != null) {
-                    dobavljac.setMesto(em.find(Mesto.class, dobavljac.getMesto().getPtt()));
-                    Dobavljac d = (Dobavljac) helper.mergeValues(oldDobavljac, dobavljac);
-//                    validator.isValid(d);
-                    helper.mergeObject(em, dobavljac);
-                    return Response.ok().build();
+            Dobavljac oldDobavljac = em.find(Dobavljac.class, dobavljac.getJmbg());
+            if (oldDobavljac != null) {
+                dobavljac.setMesto(em.find(Mesto.class, dobavljac.getMesto().getPtt()));
+                Dobavljac d = (Dobavljac) helper.mergeValues(oldDobavljac, dobavljac);
+                validator.isValid(d);
+                helper.mergeObject(em, dobavljac);
+                return Response.ok().entity("Sistem je uspešno promenio podatke od dobavljaču!").build();
 
-                } else {
-                    throw new DataNotFoundException("Ovaj dobavljac ne postoji u bazi!");
-                }
-            } catch (IllegalArgumentException e) {
-                throw new DataNotFoundException("Ovaj dobavljac ne postoji u bazi!");
+            } else {
+                throw new DataNotFoundException("Sistem ne može da promeni dobavljača!");
             }
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }
     }
-    
+
     @DELETE
     @Path("/{id}")
 //    @Produces(MediaType.APPLICATION_JSON)
-    public Response deleteDobavljac(@HeaderParam("authorization") String authorization, @PathParam("id") String id){
+    public Response deleteDobavljac(@HeaderParam("authorization") String authorization, @PathParam("id") String id) {
         EntityManager em = helper.getEntityManager();
-        if (helper.isLogged(authorization, em)){
+        if (helper.isLogged(authorization, em)) {
             Dobavljac dobavljac = em.find(Dobavljac.class, id);
-            if (dobavljac != null){
+            if (dobavljac != null) {
                 helper.removeObject(em, dobavljac);
-                return Response.ok().entity("Uspesno obrisan dobavljac!").build();
+                return Response.ok().entity("Sistem je obrisao dobavljača").build();
             } else {
-                throw new DataNotFoundException("Ovaj dobavljac ne postoji u bazi!");
+                throw new DataNotFoundException("Sistem ne može da obriše dobavljača!");
             }
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");

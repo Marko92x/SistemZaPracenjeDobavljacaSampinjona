@@ -70,10 +70,10 @@ public class StavkaDnevneBerbeRESTEndpoint {
                     }
                     em.getTransaction().begin();
                     em.getTransaction().commit();
-                    return Response.status(Response.Status.CREATED).build();
+                    return Response.status(Response.Status.CREATED).entity("Sistem je zapamtio stavke dnevne berbe!").build();
                 } catch (PersistenceException e) {
                     helper.removeObject(em, dbPk);
-                    throw new MyRollbackException("Greska pri ubacivanju dnevnih berbi i stavki!");
+                    throw new MyRollbackException("Sistem ne može da zapamti stavke dnevne berbe!");
                 }
             } else {
                 throw new MyRollbackException("Greska pri ubacivanju dnevnih berbi i stavki!");
@@ -107,7 +107,7 @@ public class StavkaDnevneBerbeRESTEndpoint {
             try {
                 Stavkadnevneberbe stavka = (Stavkadnevneberbe) em.createNamedQuery("Stavkadnevneberbe.findByStavkaid").setParameter("stavkaid", id).getSingleResult();
                 helper.removeObject(em, stavka);
-                return Response.ok().build();
+                return Response.ok().entity("Sistem je obrisao stavku dnevne berbe!").build();
             } catch (NoResultException e) {
                 throw new DataNotFoundException("Ova stavka ne postoji u bazi!");
             }

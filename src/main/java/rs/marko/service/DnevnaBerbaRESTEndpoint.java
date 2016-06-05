@@ -68,9 +68,9 @@ public class DnevnaBerbaRESTEndpoint {
             try {
                 helper.persistObject(em, dnevnaBerba);
             } catch (RollbackException e) {
-                throw new MyRollbackException("Ovaj dobavljac vec postoji u bazi!");
+                throw new MyRollbackException("Sistem ne može da kreira dnevnu berbu!");
             }
-            return Response.status(Response.Status.CREATED).build();
+            return Response.status(Response.Status.CREATED).entity("Sistem je kreirao dnevnu berbu!").build();
         } else {
             throw new NotAuthorizedException("Nemate pristup ovom pozivu!");
         }
@@ -84,7 +84,7 @@ public class DnevnaBerbaRESTEndpoint {
             try {
                 Dnevnaberba dnevnaBerba = (Dnevnaberba) em.createNamedQuery("Dnevnaberba.findByDnevnaberbaid").setParameter("dnevnaberbaid", id).getSingleResult();
                 helper.removeObject(em, dnevnaBerba);
-                return Response.ok().entity("Uspesno obrisana dnevna berba!").build();
+                return Response.ok().entity("Sistem je obrisao dnevnu berbu!").build();
             } catch (NoResultException e) {
                 throw new DataNotFoundException("Ovaj dobavljac ne postoji u bazi!");
             }

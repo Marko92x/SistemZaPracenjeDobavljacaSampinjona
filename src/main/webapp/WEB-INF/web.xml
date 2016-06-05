@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
-
-<web-app xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns="http://java.sun.com/xml/ns/javaee" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd" id="WebApp_ID" version="3.0">
+<web-app id="WebApp_ID" version="3.0" xmlns="http://java.sun.com/xml/ns/javaee" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://java.sun.com/xml/ns/javaee http://java.sun.com/xml/ns/javaee/web-app_3_0.xsd">
     <display-name>rs.marko.rest</display-name>
     <servlet>
         <servlet-name>Jersey REST Service</servlet-name>
@@ -9,7 +8,7 @@
         <init-param>
             <!--<param-name>jersey.config.server.provider.packages</param-name>-->
             <param-name>com.sun.jersey.config.property.packages</param-name>
-            <param-value>rs.marko.service</param-value>
+            <param-value>rs.marko.service;org.eclipse.persistence.jpa.rs.resources.unversioned;org.eclipse.persistence.jpa.rs.resources</param-value>
         </init-param>
         <init-param>
             <param-name>com.sun.jersey.api.json.POJOMappingFeature</param-name>
@@ -21,6 +20,4 @@
         <servlet-name>Jersey REST Service</servlet-name>
         <url-pattern>/rest/*</url-pattern>
     </servlet-mapping>
-    
-    
-</web-app> 
+</web-app>

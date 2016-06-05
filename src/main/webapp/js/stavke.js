@@ -6,8 +6,12 @@
 
 
 $(document).ready(function () {
-//    alert(getCookie("dnevnaberba"));
     ucitajStavke();
+    if (getCookie('token') === "") {
+        $('#bla').click(function () {
+            window.location.href = 'index.html';
+        });
+    }
     dugmici("DDD");
 });
 
@@ -36,8 +40,10 @@ function ucitajStavke() {
                 var empty = document.getElementById("empty");
                 empty.innerHTML = "<h3 style=\"color: white;\">Prazno</h3>";
             } else {
-                alert(JSON.parse(response.responseText).errorMessage);
-                window.location.href = "dobavljaci.html";
+                var p = document.getElementById('message');
+                p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                $('#messageModal').modal('show');
+//                window.location.href = "dobavljaci.html";
             }
 
         }
@@ -91,8 +97,11 @@ function popuniTabelu(stavke) {
                     break;
                 case 8:
                     var b = document.createElement('BUTTON');
-                    b.className = "button btn-danger";
-                    b.appendChild(document.createTextNode("Obriši"));
+                    b.className = "btn btn-danger";
+                    var span = document.createElement('SPAN');
+                    span.className = "glyphicon glyphicon-trash";
+                    b.appendChild(span);
+                    b.appendChild(document.createTextNode(" Obriši"));
                     b.id = "DDD" + stavke[x].stavkadnevneberbePK.stavkaid;
                     td.appendChild(b);
                     break;
@@ -161,13 +170,16 @@ function dodajUTabelu(json, index) {
                     break;
                 case 4:
                     var b = document.createElement('BUTTON');
-                    b.className = "button btn-danger";
+                    b.className = "btn btn-danger";
                     b.onclick = function () {
                         var p = this.parentNode.parentNode;
                         p.parentNode.removeChild(p);
                         listaStavki.splice(index - 1, 1);
-                    }
-                    b.appendChild(document.createTextNode("Obriši"));
+                    };
+                    var span = document.createElement('SPAN');
+                    span.className = "glyphicon glyphicon-trash";
+                    b.appendChild(span);
+                    b.appendChild(document.createTextNode(" Obriši"));
                     td.appendChild(b);
                 default:
             }
@@ -303,7 +315,9 @@ $(function () {
                 'Content-Type': 'application/json'
             },
             success: function (response) {
-                alert("Uspesno ste kreirali stavke!");
+                var p = document.getElementById('message');
+                p.innerHTML = response;
+                $('#messageModal').modal('show');
                 refresh();
                 listaStavki = [];
                 dialog.dialog("close");
@@ -313,8 +327,9 @@ $(function () {
                 dialogTableBody = popuniDialogTabelu();
             },
             error: function (response) {
-                refresh();
-                alert(JSON.parse(response.responseText).errorMessage);
+                var p = document.getElementById('message');
+                p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                $('#messageModal').modal('show');
             }
         });
     }
@@ -380,8 +395,8 @@ function dugmici(delimiter) {
             var id = jQuery(this).attr("id");
             var niz = id.split(delimiter);
             var id1 = niz[1];
-            var r = confirm("Da li ste sigurni?");
-            if (r === true) {
+            $('#obrisiModal').modal('show');
+            $('#daObrisi').click(function () {
                 $.ajax({
                     type: "DELETE",
                     url: getCookie("basicURL") + "rest/stavka/" + id1,
@@ -390,14 +405,18 @@ function dugmici(delimiter) {
                         'Authorization': getCookie('token')
                     },
                     success: function (response) {
-
+                        var p = document.getElementById('message');
+                        p.innerHTML = response;
+                        $('#messageModal').modal('show');
                         refresh();
                     },
                     error: function (response) {
-                        alert(JSON.parse(response.responseText).errorMessage);
+                        var p = document.getElementById('message');
+                        p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                        $('#messageModal').modal('show');
                     }
                 });
-            }
+            });
         });
     });
 }

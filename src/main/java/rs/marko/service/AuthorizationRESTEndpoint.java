@@ -62,14 +62,13 @@ public class AuthorizationRESTEndpoint {
     
     @POST
     @Path("/logout")
-    @Produces(MediaType.APPLICATION_JSON)
     public Response logout(@HeaderParam("authorization") String authorization){
         EntityManager em = helper.getEntityManager();
         Administrativniradnik ar = em.find(Administrativniradnik.class, Integer.parseInt(tokenHelper.decode(authorization).split("##")[1]));
         if (ar != null){
             ar.setToken(null);
             helper.mergeObject(em, ar);
-            return Response.ok("Uspesno ste se izlogovali!").build();
+            return Response.ok().entity("Uspesno ste se izlogovali!").build();
         } else {
             return Response.status(Response.Status.BAD_REQUEST).build();
         }

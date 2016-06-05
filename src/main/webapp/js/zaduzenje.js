@@ -5,13 +5,14 @@
  */
 
 $(document).ready(function () {
+    ucitajZaduzenja();
     if (getCookie('token') === "") {
-        window.location.href = '../index.html';
+        $('#bla').click(function () {
+            window.location.href = 'index.html';
+        });
     }
-//    ucitajDobavljace();
     dugmici("DDD");
     dugmici("XXX");
-    ucitajZaduzenja();
 });
 
 function ucitajZaduzenja() {
@@ -24,18 +25,12 @@ function ucitajZaduzenja() {
             'Authorization': getCookie('token')
         },
         success: function (response) {
-
-//            table = '<table class="table table-condensed" id="tbl"><tr  id="act"><th>JMBG</th><th>Ime</th><th>Prezime</th><th>Mesto</th></tr>';
-//            $.each(response, function (index, value) {
-//                table += '<tr><td>' + value.jmbg + '</td><td>' + value.ime + '</td><td data-type="text" data-placement="right" data-title="Enter username">' + value.prezime + '</td><td data-type="text" data-placement="right" data-title="Enter username">' + value.mesto.naziv + '</td></tr>';
-//            });
-//            table += '</table>';
-//            document.getElementById('dobavljaci').innerHTML = table;
-
             napuniTabelu(response);
         },
         error: function (response) {
-            alert(JSON.parse(response.responseText).errorMessage);
+            var p = document.getElementById('message');
+            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+            $('#messageModal').modal('show');
         }
     });
 }
@@ -80,8 +75,7 @@ function napuniTabelu(zaduzenja) {
                     case 2:
                         if (zaduzenja[x].datumrazduzenja === null) {
                             td.appendChild(document.createTextNode("Nije razduženo!"));
-                        }
-                        else {
+                        } else {
                             var d = new Date(zaduzenja[x].datumrazduzenja);
                             var y = d.getUTCFullYear();
                             var da = d.getUTCDate();
@@ -103,13 +97,19 @@ function napuniTabelu(zaduzenja) {
                         if (zaduzenja[x].datumrazduzenja === null) {
                             var b = document.createElement('BUTTON');
                             b.className = "btn btn-info";
-                            b.appendChild(document.createTextNode("Razduži"));
+                            var span = document.createElement('SPAN');
+                            span.className = "glyphicon glyphicon-edit";
+                            b.appendChild(span);
+                            b.appendChild(document.createTextNode(" Razduži"));
                             b.id = "XXX" + zaduzenja[x].zaduzenjePK.zaduzenjeid;
                             td.appendChild(b);
                         } else {
                             var b = document.createElement('BUTTON');
                             b.className = "btn btn-info";
-                            b.appendChild(document.createTextNode("Razduži"));
+                            var span = document.createElement('SPAN');
+                            span.className = "glyphicon glyphicon-ok";
+                            b.appendChild(span);
+                            b.appendChild(document.createTextNode(" Razduženo"));
                             b.disabled = true;
                             td.appendChild(b);
                         }
@@ -117,7 +117,10 @@ function napuniTabelu(zaduzenja) {
                     case 6:
                         var b = document.createElement('BUTTON');
                         b.className = "btn btn-danger";
-                        b.appendChild(document.createTextNode("Obriši"));
+                        var span = document.createElement('SPAN');
+                        span.className = "glyphicon glyphicon-trash";
+                        b.appendChild(span);
+                        b.appendChild(document.createTextNode(" Obriši"));
                         b.id = "DDD" + zaduzenja[x].zaduzenjePK.zaduzenjeid;
                         td.appendChild(b);
                         break;
@@ -154,10 +157,15 @@ $("#btnDodajZaduzenje").click(function () {
             'Authorization': getCookie('token')
         },
         success: function (response) {
+            var p = document.getElementById('message');
+            p.innerHTML = response;
+            $('#messageModal').modal('show');
             refresh();
         },
         error: function (response) {
-            alert(JSON.parse(response.responseText).errorMessage);
+            var p = document.getElementById('message');
+            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+            $('#messageModal').modal('show');
         }
     });
 });
@@ -169,8 +177,8 @@ function dugmici(delimiter) {
             var niz = id.split(delimiter);
             var id1 = niz[1];
             if (delimiter === 'XXX') {
-                var r = confirm("Da li ste sigurni?");
-                if (r === true) {
+                $('#razduziModal').modal('show');
+                $('#daRazduzi').click(function () {
                     $.ajax({
                         type: "PUT",
                         url: getCookie("basicURL") + "rest/zaduzenja/" + id1,
@@ -179,17 +187,21 @@ function dugmici(delimiter) {
                             'Authorization': getCookie('token')
                         },
                         success: function (response) {
-
+                            var p = document.getElementById('message');
+                            p.innerHTML = response;
+                            $('#messageModal').modal('show');
                             refresh();
                         },
                         error: function (response) {
-                            alert(JSON.parse(response.responseText).errorMessage);
+                            var p = document.getElementById('message');
+                            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                            $('#messageModal').modal('show');
                         }
                     });
-                }
+                });
             } else {
-                var r = confirm("Da li ste sigurni?");
-                if (r === true) {
+                $('#obrisiModal').modal('show');
+                $('#daObrisi').click(function () {
                     $.ajax({
                         type: "DELETE",
                         url: getCookie("basicURL") + "rest/zaduzenja/" + id1,
@@ -198,17 +210,25 @@ function dugmici(delimiter) {
                             'Authorization': getCookie('token')
                         },
                         success: function (response) {
+                            var p = document.getElementById('message');
+                            p.innerHTML = response;
+                            $('#messageModal').modal('show');
                             refresh();
                         },
                         error: function (response) {
-                            alert(JSON.parse(response.responseText).errorMessage);
+                            var p = document.getElementById('message');
+                            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                            $('#messageModal').modal('show');
                         }
                     });
-                }
+                });
             }
         });
+
     });
 }
+
+
 
 function refresh() {
     ucitajZaduzenja();

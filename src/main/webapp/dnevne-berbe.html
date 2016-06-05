@@ -5,82 +5,141 @@ To change this template file, choose Tools | Templates
 and open the template in the editor.
 -->
 <html>
-<head>
-    <title>PECURKE</title>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
-    <link href="css/style.css" rel="stylesheet">
-    <link href="css/login.css" rel="stylesheet">
-    <link href="jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet">
-</head>
-<body>
+    <head>
+        <link rel="icon" href="img/shroom.png">
+        <title>ShroomSoft</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
+        <link href="css/style.css" rel="stylesheet">
+        <link href="css/login.css" rel="stylesheet">
+        <link href="jquery-ui-1.11.4/jquery-ui.min.css" rel="stylesheet">
+    </head>
+    <body>
 
 
-<div class="row" id="row1">
-    <div class="col-md-2"></div>
-    <div class="col-md-8">
-        <h1>Dnevne Berbe</h1>
-    </div>
-    <div class="col-md-2"></div>
-</div>
-<div class="row" id="row2">
-    <div class="col-md-2"></div>
-    <div class="col-md-8" id="dnevneBerbe">
-        <table class="table" id="tblDnevneBerbe"></table>
-        <div id="empty" style="float: center;"></div>
+        <div class="row" id="row1">
+            <div class="col-md-2"></div>
+            <div class="col-md-8">
+                <h1>Dnevne Berbe</h1>
+            </div>
+            <div class="col-md-2"></div>
+        </div>
+        <div class="row" id="row2">
+            <div class="col-md-2"></div>
+            <div class="col-md-8" id="dnevneBerbe">
+                <table class="table" id="tblDnevneBerbe"></table>
+                <div id="empty" style="float: center;"></div>
 
-    </div>
-    <div class="col-md-2"></div>
+            </div>
+            <div class="col-md-2"></div>
 
 
-</div>
+        </div>
         <button class="btn btn-xlarge btn-info" style="float: center;" id="btnDodajDnevnuBerbu">Dodaj dnevnu berbu</button>
 
-    <div id="dialog-form" hidden="hidden" title="Dodavanje dnevne berbe">
+        <div id="dialog-form" hidden="hidden" title="Dodavanje dnevne berbe">
 
-    <form>
-        <fieldset>
+            <form>
+                <fieldset>
 
-            <div class="col-md-6">
-                <label >Tacne</label>
-                <input type="text" name="name" id="tacne" class="text ui-widget-content ui-corner-all">
-                <label >Prva klasa</label>
-                <input type="text" name="name" id="prvaKlasa" class="text ui-widget-content ui-corner-all">
-                <label >Druga klasa</label>
-                <input type="text" name="name" id="drugaKlasa" class="text ui-widget-content ui-corner-all">
-                <label >Treca klasa</label>
-                <input type="text" name="name" id="trecaKlasa" class="text ui-widget-content ui-corner-all">
+                    <div class="col-md-6">
+                        <label >Tacne</label>
+                        <input type="text" name="name" id="tacne" class="text ui-widget-content ui-corner-all">
+                        <label >Prva klasa</label>
+                        <input type="text" name="name" id="prvaKlasa" class="text ui-widget-content ui-corner-all">
+                        <label >Druga klasa</label>
+                        <input type="text" name="name" id="drugaKlasa" class="text ui-widget-content ui-corner-all">
+                        <label >Treca klasa</label>
+                        <input type="text" name="name" id="trecaKlasa" class="text ui-widget-content ui-corner-all">
 
 
+                    </div>
+                    <div class="col-md-6">
+                        <label >Cena tacne</label>
+                        <input type="text" name="name" id="cenaTacne" class="text ui-widget-content ui-corner-all">
+                        <label >Cena prve klase</label>
+                        <input type="text" name="name" id="cenaPrveKlase" class="text ui-widget-content ui-corner-all">
+                        <label >Cena druge klase</label>
+                        <input type="text" name="name" id="cenaDrugeKlase" class="text ui-widget-content ui-corner-all">
+                        <label >Cena trece klase</label>
+                        <input type="text" name="name" id="cenaTreceKlase" class="text ui-widget-content ui-corner-all">
+
+
+                    </div>
+
+
+
+
+                    <!-- Allow form submission with keyboard without duplicating the dialog button -->
+                    <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
+                </fieldset>
+            </form>
+        </div>
+
+        <div class="modal fade" id="messageModal" role="dialog" tabindex="-1">
+            <form>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title">Poruka</h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p id='message'></p>
+                        </div>
+                        <div class="modal-footer modal-footer-text-center">
+                            <button id="bla" type="submit" class="btn btn-info center-block"
+                                    data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+
+        <div class="modal fade" id="obrisiModal" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Brisanje</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Da li ste sigurni?</p>
+                    </div>
+                    <div class="modal-footer modal-footer-text-center">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"> Ne
+                        </button>
+                        <button id="daObrisi" type="button" class="btn btn-info" data-dismiss="modal"> Da
+                        </button>
+                    </div>
+                </div>
             </div>
-            <div class="col-md-6">
-                <label >Cena tacne</label>
-                <input type="text" name="name" id="cenaTacne" class="text ui-widget-content ui-corner-all">
-                <label >Cena prve klase</label>
-                <input type="text" name="name" id="cenaPrveKlase" class="text ui-widget-content ui-corner-all">
-                <label >Cena druge klase</label>
-                <input type="text" name="name" id="cenaDrugeKlase" class="text ui-widget-content ui-corner-all">
-                <label >Cena trece klase</label>
-                <input type="text" name="name" id="cenaTreceKlase" class="text ui-widget-content ui-corner-all">
+        </div>
 
-
+        <div class="modal fade" id="obrisiModal" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Brisanje</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Da li ste sigurni?</p>
+                    </div>
+                    <div class="modal-footer modal-footer-text-center">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"> Ne
+                        </button>
+                        <button id="daObrisi" type="button" class="btn btn-info" data-dismiss="modal"> Da
+                        </button>
+                    </div>
+                </div>
             </div>
+        </div>
 
 
 
-
-            <!-- Allow form submission with keyboard without duplicating the dialog button -->
-            <input type="submit" tabindex="-1" style="position:absolute; top:-1000px">
-        </fieldset>
-    </form>
-</div>
-
-
-
-<script type="text/javascript" src="js/jquery.js"></script>
-<script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.js"></script>
-<script type="text/javascript" src="js/dnevne-berbe.js"></script>
-<script type="text/javascript" src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
-</body>
+        <script type="text/javascript" src="js/jquery.js"></script>
+        <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.js"></script>
+        <script type="text/javascript" src="js/dnevne-berbe.js"></script>
+        <script type="text/javascript" src="jquery-ui-1.11.4/jquery-ui.min.js"></script>
+    </body>
 </html>

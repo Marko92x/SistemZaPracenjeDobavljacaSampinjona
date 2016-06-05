@@ -1,5 +1,10 @@
 $(document).ready(function () {
     ucitajDnevneBerbe();
+    if (getCookie('token') === "") {
+        $('#bla').click(function () {
+            window.location.href = 'index.html';
+        });
+    }
     dugmici("XXX");
     dugmici("DDD");
 });
@@ -37,8 +42,9 @@ function ucitajDnevneBerbe() {
                 var empty = document.getElementById("empty");
                 empty.innerHTML = "<h3 style=\"color: white;\">Prazno</h3>";
             } else {
-                alert(JSON.parse(response.responseText).errorMessage);
-                window.location.href = "dobavljaci.html";
+                var p = document.getElementById('message');
+                p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                $('#messageModal').modal('show');
             }
 
         }
@@ -90,15 +96,21 @@ function napuniTabelu(dnevneberbe) {
                         break;
                     case 2:
                         var b = document.createElement('BUTTON');
-                        b.className = "button btn-info";
-                        b.appendChild(document.createTextNode("Radi"));
+                        b.className = "btn btn-info";
+                        var span = document.createElement('SPAN');
+                        span.className = "glyphicon glyphicon-edit";
+                        b.appendChild(span);
+                        b.appendChild(document.createTextNode(" Radi"));
                         b.id = "XXX" + dnevneberbe[x].dnevnaberbaPK.dnevnaberbaid + "XXX" + datum;
                         td.appendChild(b);
                         break;
                     case 3:
                         var b = document.createElement('BUTTON');
-                        b.className = "button btn-danger";
-                        b.appendChild(document.createTextNode("Obriši"));
+                        b.className = "btn btn-danger";
+                        var span = document.createElement('SPAN');
+                        span.className = "glyphicon glyphicon-trash";
+                        b.appendChild(span);
+                        b.appendChild(document.createTextNode(" Obriši"));
                         b.id = "DDD" + dnevneberbe[x].dnevnaberbaPK.dnevnaberbaid;
                         td.appendChild(b);
                         break;
@@ -219,12 +231,15 @@ $(function () {
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
-                    alert("Uspesno ste kreirali stavku!");
-
+                    var p = document.getElementById('message');
+                    p.innerHTML = response;
+                    $('#messageModal').modal('show');
                     refresh();
                 },
                 error: function (response) {
-                    refresh();
+                    var p = document.getElementById('message');
+                    p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                    $('#messageModal').modal('show');
                 }
             });
 
@@ -286,14 +301,17 @@ $(function () {
                 'Content-Type': 'application/json'
             },
             success: function (response) {
-                alert("Uspesno");
+                var p = document.getElementById('message');
+                p.innerHTML = response;
+                $('#messageModal').modal('show');
                 refresh();
                 var empty = document.getElementById("empty");
                 empty.innerHTML = "";
             },
             error: function (response) {
-                alert("Neuspesno");
-                alert(JSON.parse(response.responseText).errorMessage);
+                var p = document.getElementById('message');
+                p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                $('#messageModal').modal('show');
             }
         });
 
@@ -334,8 +352,8 @@ function dugmici(delimiter) {
                 document.cookie = "datumDB=" + datum;
                 window.location.href = "stavke-dnevne-berbe.html";
             } else {
-                var r = confirm("Da li ste sigurni?");
-                if (r === true) {
+                $('#obrisiModal').modal('show');
+                $('#daObrisi').click(function () {
                     $.ajax({
                         type: "DELETE",
                         url: getCookie("basicURL") + "rest/dnevnaBerba/" + id1,
@@ -344,14 +362,18 @@ function dugmici(delimiter) {
                             'Authorization': getCookie('token')
                         },
                         success: function (response) {
+                            var p = document.getElementById('message');
+                            p.innerHTML = response;
+                            $('#messageModal').modal('show');
                             refresh();
                         },
                         error: function (response) {
-                            refresh();
-                            alert(JSON.parse(response.responseText).errorMessage);
+                            var p = document.getElementById('message');
+                            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                            $('#messageModal').modal('show');
                         }
                     });
-                }
+                });
             }
 
         });

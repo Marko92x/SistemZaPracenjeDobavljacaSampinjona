@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>TODO supply a title</title>
+        <link rel="icon" href="img/shroom.png">
+        <title>ShroomSoft</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
@@ -44,33 +45,36 @@ and open the template in the editor.
         <div class="row" id="row1">
             <div id="outButton" class="col-md-5">
                 <button id="logOut" class="btn btn-info"><span class="glyphicon glyphicon glyphicon-log-out"></span> Odjavi se</button>
-                
+
             </div>
             <div class="col-md-2">
                 <h1>Dobavljači</h1>
                 <br/>
-                <button class="btn btn-info" style="float: center;" id="btnDodajDobavljaca">Dodaj novog dobavljača</button>
+                <button class="btn btn-info" style="float: center;" id="btnDodajDobavljaca"><span class="glyphicon glyphicon-user"></span> Dodaj novog dobavljača</button>
             </div>
             <div class="col-md-5">
                 <div id="ko1" class="col-md-5">
                     <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
-                    <button class="btn btn-info" id="idKreirajObracun">Kreiraj obračun</button>
+                    <button class="btn btn-info" id="idKreirajObracun"><span class="glyphicon glyphicon-download-alt"></span> Kreiraj obračun</button>
                 </div>
                 <div id="ko2" class="col-md-5">
                     <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
-                    <button class="btn btn-info" id="idKreirajStatistiku">Kreiraj statistiku</button>
+                    <button class="btn btn-info" id="idKreirajStatistiku"><span class="glyphicon glyphicon-download-alt"></span> Kreiraj statistiku</button>
                 </div>
                 <div class="col-md-2"></div>
-                <!--                <p id="para1">Od:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker"></p>
-                                <p id="para2">   Do:<input type="text" class="text ui-widget-content ui-corner-all" id="datepicker1"></p>
-                                <br/><br/><div id="btn1"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>
-                                <div id="btn2"><button class="button btn-info" id="idKreirajObracun">Kreiraj obračun</button></div>-->
             </div>
         </div>
         <div class="row" id="row2">
             <div class="col-md-2"></div>
-            <div class="col-md-8" id="dobavljaci">
-                <table class="table" cellspacing="0" width="100%" id="tblDobavljaci"></table>
+            <div class="col-md-8">
+                <div class="row">
+                    <div class="form-group pull-right">
+                        <input type="text" class="search form-control" placeholder="Pretraga !">
+                    </div>
+                </div>
+                <div class="row"  id="dobavljaci">
+                    <table class="table results" cellspacing="0" width="100%" id="tblDobavljaci"></table>
+                </div>
             </div>
 
             <div class="col-md-2"></div>
@@ -130,7 +134,7 @@ and open the template in the editor.
                 </fieldset>
             </form>
         </div>
-        
+
         <div class="modal fade" id="messageModal" role="dialog" tabindex="-1">
             <form>
                 <div class="modal-dialog">
@@ -149,6 +153,44 @@ and open the template in the editor.
                     </div>
                 </div>
             </form>
+        </div>
+        
+        <div class="modal fade" id="obrisiModal" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Brisanje</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Da li ste sigurni?</p>
+                    </div>
+                    <div class="modal-footer modal-footer-text-center">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"> Ne
+                        </button>
+                        <button id="daObrisi" type="button" class="btn btn-info" data-dismiss="modal"> Da
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="modal fade" id="odjaviModal" role="dialog" tabindex="-1">
+            <div class="modal-dialog">
+                <div class="modal-content">
+                    <div class="modal-header text-center">
+                        <h4 class="modal-title">Odjava</h4>
+                    </div>
+                    <div class="modal-body text-center">
+                        <p>Da li ste sigurni?</p>
+                    </div>
+                    <div class="modal-footer modal-footer-text-center">
+                        <button type="button" class="btn btn-danger" data-dismiss="modal"> Ne
+                        </button>
+                        <button id="daOdjavi" type="button" class="btn btn-info" data-dismiss="modal"> Da
+                        </button>
+                    </div>
+                </div>
+            </div>
         </div>
 
 

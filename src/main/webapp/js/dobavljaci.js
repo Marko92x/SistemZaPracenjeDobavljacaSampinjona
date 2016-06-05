@@ -3,19 +3,39 @@
  * To change this template file, choose Tools | Templates
  * and open the template in the editor.
  */
-
-function uspeh() {
-    alert(getCookie("token"));
-}
-
 $(document).ready(function () {
+    ucitajDobavljace();
     if (getCookie('token') === "") {
-        window.location.href = '../index.html';
+        $('#bla').click(function () {
+            window.location.href = 'index.html';
+        });
     }
     ucitajMesta();
-    ucitajDobavljace();
     dugmici("DDD");
     dugmici("XXX");
+
+    $(".search").keyup(function () {
+        var searchTerm = $(".search").val();
+//        var listItem = $('.results tbody').children('tr');
+        var searchSplit = searchTerm.replace(/ /g, "'):containsi('");
+
+        $.extend($.expr[':'], {'containsi': function (elem, i, match, array) {
+                return (elem.textContent || elem.innerText || '').toLowerCase().indexOf((match[3] || "").toLowerCase()) >= 0;
+            }
+        });
+
+        $(".results tbody tr").not(":containsi('" + searchSplit + "')").each(function (e) {
+            $(this).attr('visible', 'false');
+        });
+
+        $(".results tbody tr:containsi('" + searchSplit + "')").each(function (e) {
+            $(this).attr('visible', 'true');
+        });
+
+        if (searchTerm === "") {
+            refresh();
+        }
+    });
 });
 var dobavljac;
 
@@ -49,15 +69,12 @@ function ucitajDobavljace() {
             'Authorization': getCookie('token')
         },
         success: function (response) {
-
-//            table = '<table class="table table-condensed" id="tbl"><tr  id="act"><th>JMBG</th><th>Ime</th><th>Prezime</th><th>Mesto</th></tr>';
-//            $.each(response, function (index, value) {
-//                table += '<tr><td>' + value.jmbg + '</td><td>' + value.ime + '</td><td data-type="text" data-placement="right" data-title="Enter username">' + value.prezime + '</td><td data-type="text" data-placement="right" data-title="Enter username">' + value.mesto.naziv + '</td></tr>';
-//            });
-//            table += '</table>';
-//            document.getElementById('dobavljaci').innerHTML = table;
-
             napuniTabelu(response);
+        },
+        error: function (response) {
+            var p = document.getElementById('message');
+            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+            $('#messageModal').modal('show');
         }
     });
 }
@@ -121,7 +138,10 @@ function napuniTabelu(dobavljaci) {
                     case 4:
                         var b = document.createElement('BUTTON');
                         b.className = "btn btn-info";
-                        b.appendChild(document.createTextNode("Radi"));
+                        var span = document.createElement('SPAN');
+                        span.className = "glyphicon glyphicon-edit";
+                        b.appendChild(span);
+                        b.appendChild(document.createTextNode(" Radi"));
                         b.id = "XXX" + dobavljaci[x].jmbg;
                         b.onclick = function () {
                             vratiDobavljaca($('td:first', $(this).parents('tr')).text());
@@ -131,7 +151,10 @@ function napuniTabelu(dobavljaci) {
                     case 5:
                         var b = document.createElement('BUTTON');
                         b.className = "btn btn-danger";
-                        b.appendChild(document.createTextNode("Obriši"));
+                        var span = document.createElement('SPAN');
+                        span.className = "glyphicon glyphicon-trash";
+                        b.appendChild(span);
+                        b.appendChild(document.createTextNode(" Obriši"));
                         b.id = "DDD" + dobavljaci[x].jmbg;
                         td.appendChild(b);
                         break;
@@ -155,8 +178,8 @@ function dugmici(delimiter) {
             var id1 = niz[1];
 
             if (delimiter === 'DDD') {
-                var r = confirm("Da li ste sigurni?");
-                if (r === true) {
+                $('#obrisiModal').modal('show');
+                $('#daObrisi').click(function () {
                     $.ajax({
                         url: 'rest/dobavljac/' + id1,
                         method: 'DELETE',
@@ -165,23 +188,20 @@ function dugmici(delimiter) {
                             'Authorization': getCookie('token')
                         },
                         success: function (response) {
-//                            var table = document.getElementById('tblDobavljaci');
-//                            table.innerHTML = "";
-//                            ucitajDobavljace();
+                            var p = document.getElementById('message');
+                            p.innerHTML = response;
+                            $('#messageModal').modal('show');
                             refresh();
-                            alert("Usprešno ste obrisali člana!");
                         },
                         error: function (response) {
-                            refresh();
-                            alert("Greska");
+                            var p = document.getElementById('message');
+                            p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                            $('#messageModal').modal('show');
                         }
                     });
-
-                }
+                });
             } else {
                 document.cookie = "dobavljac=" + id1;
-                //window.location.href = "radi.html";
-
                 ovaj =
                         $("#dialog-confirm").dialog({
                     resizable: false,
@@ -221,22 +241,6 @@ function popuni() {
     $('#ulica').val(dobavljac.ulica);
     $('#broj').val(dobavljac.broj);
 }
-
-//case 5:
-//                        var b = document.createElement('BUTTON');
-//                        b.className = "button btn-info";
-//                        b.appendChild(document.createTextNode("Izmeni"));
-//                        b.id = "XXX" + clanovi[x].id;
-//                        td.appendChild(b);
-//                        break;
-//                    case 6:
-//                        var b = document.createElement('BUTTON');
-//                        b.className = "button btn-danger";
-//                        b.appendChild(document.createTextNode("Obriši"));
-//                        b.id = "DDD" + clanovi[x].id;
-//                        td.appendChild(b);
-//                        break;
-
 function ucitajMesta() {
     $.ajax({
         type: "GET",
@@ -340,18 +344,22 @@ $(function () {
                     'Content-Type': 'application/json'
                 },
                 success: function (response) {
-                    alert("Uspesno ste izmenili dobavljača!");
+                    var p = document.getElementById('message');
+                    p.innerHTML = response;
+                    $('#messageModal').modal('show');
+                    flag = true;
+                    $('#jmbg').prop("disabled", false);
                     refresh();
                     dialog.dialog("close");
                     ovaj.dialog("close");
-
                 },
                 error: function (response) {
-                    alert(JSON.parse(response.responseText).errorMessage);
+                    var p = document.getElementById('message');
+                    p.innerHTML = JSON.parse(response.responseText).errorMessage;
+                    $('#messageModal').modal('show');
                 }
             });
         }
-        flag = true;
     }
 
 
@@ -419,67 +427,11 @@ $("#idKreirajObracun").click(function () {
     if (datumOd <= datumDo) {
         window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString;
     } else {
-        alert("Datum OD je vice od datuma DO!")
+        var p = document.getElementById('message');
+        p.innerHTML = "Datum OD je vice od datuma DO!";
+        $('#messageModal').modal('show');
     }
-//    $.ajax({
-//        type: "GET",
-//        url: getCookie("basicURL") + "rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString,
-//        headers: {
-//            'Authorization': getCookie("token")
-//        },
-//        success: function (response) {
-//
-//            window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/obracun/"+ datumOdString + "/" + datumDoString;
-//        },
-//        error: function (response) {
-//            alert(JSON.parse(response.responseText).errorMessage);
-//        }
-//    });
-//    $.ajax({
-//        type: "GET",
-//        url: getCookie("basicURL") + "rest/kreiraj/obracun/" + datumOdString + "/" + datumDoString,
-//        success: function (response, status, xhr) { // check for a filename
-//            var filename = "";
-//            var disposition = xhr.getResponseHeader('Content-Disposition');
-//            if (disposition && disposition.indexOf('attachment') !== -1) {
-//                var filenameRegex = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/;
-//                var matches = filenameRegex.exec(disposition);
-//                if (matches != null && matches[1])
-//                    filename = matches[1].replace(/['"]/g, '');
-//            }
-//
-//            var type = xhr.getResponseHeader('Content-Type');
-//            var blob = new Blob([response], {type: type});
-//
-//            if (typeof window.navigator.msSaveBlob !== 'undefined') {
-//                // IE workaround for "HTML7007: One or more blob URLs were revoked by closing the blob for which they were created. These URLs will no longer resolve as the data backing the URL has been freed."
-//                window.navigator.msSaveBlob(blob, filename);
-//            } else {
-//                var URL = window.URL || window.webkitURL;
-//                var downloadUrl = URL.createObjectURL(blob);
-//
-//                if (filename) {
-//                    // use HTML5 a[download] attribute to specify filename
-//                    var a = document.createElement("a");
-//                    // safari doesn't support this yet
-//                    if (typeof a.download === 'undefined') {
-//                        window.location = downloadUrl;
-//                    } else {
-//                        a.href = downloadUrl;
-//                        a.download = filename;
-//                        document.body.appendChild(a);
-//                        a.click();
-//                    }
-//                } else {
-//                    window.location = downloadUrl;
-//                }
-//
-//                setTimeout(function () {
-//                    URL.revokeObjectURL(downloadUrl);
-//                }, 100); // cleanup
-//            }
-//        }
-//    });
+
 });
 
 $("#idKreirajStatistiku").click(function () {
@@ -498,7 +450,30 @@ $("#idKreirajStatistiku").click(function () {
     if (datumOd <= datumDo) {
         window.location.href = "http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/statistika/" + datumOdString + "/" + datumDoString;
     } else {
-        alert("Datum OD je vice od datuma DO!")
+        var p = document.getElementById('message');
+        p.innerHTML = "Datum OD je vice od datuma DO!";
+        $('#messageModal').modal('show');
     }
-    //    window.open("http://localhost:8084/SistemZaPracenjeDobavljacaSampinjona/rest/kreiraj/statistika/" + datumOdString + "/" + datumDoString);
+});
+
+$('#logOut').click(function () {
+    $('#odjaviModal').modal('show');
+    $('#daOdjavi').click(function () {
+        $.ajax({
+            url: getCookie("basicURL") + "rest/authorization/logout",
+            method: 'POST',
+            headers: {
+                'Authorization': getCookie('token')
+            },
+            success: function (response) {
+                document.cookie = 'token=';
+                var p = document.getElementById('message');
+                p.innerHTML = response;
+                $('#messageModal').modal('show');
+                $('#bla').click(function () {
+                    window.location.href = "index.html";
+                });
+            }
+        });
+    });
 });

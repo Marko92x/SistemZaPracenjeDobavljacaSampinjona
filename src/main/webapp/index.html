@@ -6,7 +6,8 @@ and open the template in the editor.
 -->
 <html>
     <head>
-        <title>Otkup pecuraka</title>
+        <link rel="icon" href="img/shroom.png">
+        <title>ShroomSoft</title>
         <meta charset="UTF-8">
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="bootstrap-3.3.6-dist/css/bootstrap.css" rel="stylesheet">
@@ -35,6 +36,26 @@ and open the template in the editor.
         </div>
         <div class="col-md-4"></div>
 
+        <div class="modal fade" id="messageModal" role="dialog" tabindex="-1">
+            <form>
+                <div class="modal-dialog">
+                    <div class="modal-content">
+                        <div class="modal-header text-center">
+                            <h4 class="modal-title">Poruka</h4>
+                        </div>
+                        <div class="modal-body text-center">
+                            <p id='message'></p>
+                        </div>
+                        <div class="modal-footer modal-footer-text-center">
+                            <button id="bla" type="submit" class="btn btn-info center-block"
+                                    data-dismiss="modal"><span class="glyphicon glyphicon-ok"></span> OK
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </form>
+        </div>
+        
         <script type="text/javascript" src="js/jquery.js"></script>
         <script type="text/javascript" src="bootstrap-3.3.6-dist/js/bootstrap.js"></script>
         <script type="text/javascript" src="js/login.js"></script>

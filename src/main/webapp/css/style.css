@@ -430,8 +430,8 @@ small.text-muted {
 }
 
 #dobavljaci {  
-    /*    height: 500px !important;
-        overflow: auto;*/
+    height: 500px !important;
+    /* overflow: auto;*/
     overflow: auto;
     height: 100%;
 }​
@@ -457,10 +457,32 @@ small.text-muted {
     border-radius: 8px;
 }
 
-#messageModal {
+#messageModal, #razduziModal, #obrisiModal, #odjaviModal {
     color: black;
 }
 
 #outButton {
     padding-top: 3em;
+}
+
+body{
+    padding:20px 20px;
+}
+
+.results tr[visible='false'],
+.no-result{
+    display:none;
+}
+
+.results tr[visible='true']{
+    display:table-row;
+}
+
+.counter{
+    padding:8px; 
+    color:#ccc;
+}
+
+#brojVreca {
+    color: black;
 }
